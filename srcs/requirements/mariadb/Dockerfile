@@ -7,7 +7,7 @@ RUN apt-get update && \
 
 COPY conf/mariadb.conf /etc/mysql/mariadb.conf.d/mariadb.conf
 
-COPY tools/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY tools/init.sh /init.sh
+RUN chmod +x /init.sh
 EXPOSE 3306
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/init.sh"]
