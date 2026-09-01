@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-
+getent passwd www-data
 DB_NAME=$(cat /run/secrets/db_name.txt)
 DB_USER=$(cat /run/secrets/db_user.txt)
 DB_PASS=$(cat /run/secrets/db_password.txt)
@@ -28,7 +28,7 @@ if [ ! -f "$WP_DIR/wp-config.php" ]; then
                 --dbhost='$DB_HOST' \
         && wp core install \
                 --path='$WP_DIR' \
-                --url='$WP_URL' \
+                --url='$WP_URL' \cd
                 --title='$WP_TITLE' \
                 --admin_user='$WP_ADMIN_USER' \
                 --admin_password='$WP_ADMIN_PASS' \
