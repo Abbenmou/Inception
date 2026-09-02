@@ -17,8 +17,6 @@ services:
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 5s
-      timeout: 3s
-      retries: 5
     restart: unless-stopped
 
   wordpress:
@@ -48,8 +46,6 @@ services:
     build:
       context: ./srcs/requirements/nginx
     container_name: nginx
-    depends_on:
-      - wordpress
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
     ports:
