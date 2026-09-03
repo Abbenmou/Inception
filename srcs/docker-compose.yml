@@ -3,10 +3,8 @@ services:
     build:
       context: ./srcs/requirements/mariadb
     container_name: mariadb
-    environment:
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
     secrets:
+      - db_name
       - db_user
       - db_password
       - db_root_password
@@ -28,10 +26,10 @@ services:
         condition: service_healthy
     environment:
       - DB_HOST=mariadb
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
       - DOMAIN_NAME=${DOMAIN_NAME}
     secrets:
+      - db_name
+      - db_user
       - db_password
       - wp_admin_user
       - wp_admin_password
@@ -58,23 +56,15 @@ services:
 
 volumes:
   mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/abbenmou/data/mariadb
   wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/abbenmou/data/wordpress
 
 networks:
   inception:
     driver: bridge
 
 secrets:
+  db_name:
+    file: ./secrets/db_name.txt
   db_user:
     file: ./secrets/db_user.txt
   db_password:
