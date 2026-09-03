@@ -19,8 +19,8 @@ GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASS}';
 FLUSH PRIVILEGES;
 EOF
-
-    exec mariadbd --user=mysql --datadir=/var/lib/mysql --init-file=/tmp/init.sql
+    echo "Database initialized with name: $DB_NAME, user: $DB_USER"
+    exec mariadbd --user=mysql --datadir=/var/lib/mysql --init-file=/tmp/init.sql --bind-address=0.0.0.0
 fi
-
-exec mariadbd --user=mysql --datadir=/var/lib/mysql
+echo "Database already initialized, starting MariaDB..."
+exec mariadbd --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0

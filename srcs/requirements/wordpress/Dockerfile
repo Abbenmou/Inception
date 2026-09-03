@@ -5,9 +5,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL -o /usr/local/bin/wp \
-        https://github.com/wp-cli/wp-cli/releases/download/v2.11.0/wp-cli-2.11.0.phar && \
-    chmod +x /usr/local/bin/wp
+RUN curl -o /usr/local/bin/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x /usr/local/bin/wp-cli.phar \
+    && printf '#!/bin/sh\nphp /usr/local/bin/wp-cli.phar "$@"\n' > /usr/local/bin/wp \
+    && chmod +x /usr/local/bin/wp
 
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
