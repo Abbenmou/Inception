@@ -1,12 +1,11 @@
 services:
   mariadb:
     build:
-      context: ./srcs/requirements/mariadb
+      context: ./requirements/mariadb
     container_name: mariadb
-    environment:
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
+    env_file: .env
     secrets:
+      - db_name
       - db_user
       - db_password
       - db_root_password
@@ -14,24 +13,16 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-    healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
-      interval: 5s
     restart: unless-stopped
 
   wordpress:
     build:
-      context: ./srcs/requirements/wordpress
+      context: ./requirements/wordpress
     container_name: wordpress
-    depends_on:
-      mariadb:
-        condition: service_healthy
-    environment:
-      - DB_HOST=mariadb
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DOMAIN_NAME=${DOMAIN_NAME}
+    env_file: .env
     secrets:
+      - db_name
+      - db_user
       - db_password
       - wp_admin_user
       - wp_admin_password
@@ -44,14 +35,13 @@ services:
 
   nginx:
     build:
-      context: ./srcs/requirements/nginx
+      context: ./requirements/nginx
     container_name: nginx
-    environment:
-      - DOMAIN_NAME=${DOMAIN_NAME}
+    env_file: .env
     ports:
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/html:ro
+      - wordpress_data:/var/www/html
     networks:
       - inception
     restart: unless-stopped
@@ -69,21 +59,24 @@ volumes:
       type: none
       o: bind
       device: /home/abbenmou/data/wordpress
+  
 
 networks:
   inception:
     driver: bridge
 
 secrets:
+  db_name:
+    file: ../secrets/db_name.txt
   db_user:
-    file: ./secrets/db_user.txt
+    file: ../secrets/db_user.txt
   db_password:
-    file: ./secrets/db_password.txt
+    file: ../secrets/db_password.txt
   db_root_password:
-    file: ./secrets/db_root_password.txt
+    file: ../secrets/db_root_password.txt
   wp_admin_user:
-    file: ./secrets/wp_admin_user.txt
+    file: ../secrets/wp_admin_user.txt
   wp_admin_password:
-    file: ./secrets/wp_admin_password.txt
+    file: ../secrets/wp_admin_password.txt
   wp_admin_email:
-    file: ./secrets/wp_admin_email.txt
+    file: ../secrets/wp_admin_email.txt

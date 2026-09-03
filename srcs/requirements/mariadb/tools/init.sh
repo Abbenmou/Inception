@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-DB_NAME=$(cat /run/secrets/db_name.txt)
-DB_USER=$(cat /run/secrets/db_user.txt)
-DB_PASS=$(cat /run/secrets/db_password.txt)
-DB_ROOT_PASS=$(cat /run/secrets/db_root_password.txt)
+DB_NAME=$(cat /run/secrets/db_name)
+DB_USER=$(cat /run/secrets/db_user)
+DB_PASS=$(cat /run/secrets/db_password)
+DB_ROOT_PASS=$(cat /run/secrets/db_root_password)
 
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
