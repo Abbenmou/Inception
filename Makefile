@@ -1,25 +1,29 @@
+NAME		= inception
+COMPOSE		= docker compose -f ./srcs/docker-compose.yml
+DATA_DIR	= /home/abbenmou/data
+
 all: build
 
 build:
-	@mkdir -p /home/abbenmou/data/mariadb
-	@mkdir -p /home/abbenmou/data/wordpress
-	docker compose -f ./srcs/docker-compose.yml up --build -d
+	@mkdir -p $(DATA_DIR)/mariadb
+	@mkdir -p $(DATA_DIR)/wordpress
+	$(COMPOSE) up --build -d
 
 stop:
-	docker compose -f ./srcs/docker-compose.yml stop
+	$(COMPOSE) stop
 
 start:
-	docker compose -f ./srcs/docker-compose.yml start
+	$(COMPOSE) start
 
 down:
-	docker compose -f ./srcs/docker-compose.yml down
+	$(COMPOSE) down
 
-clean:
-	docker compose -f ./srcs/docker-compose.yml down --rmi all --volumes
+clean: down
+	$(COMPOSE) down --rmi all --volumes
 
-fclean:
-	sudo rm -rf /home/abbenmou/data
+fclean: clean
+	sudo rm -rf $(DATA_DIR)
 
 re: fclean all
 
-.PHONY: all build re start stop clean fclean
+.PHONY: all build re start stop down clean fclean
