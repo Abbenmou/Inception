@@ -21,8 +21,6 @@ WP_DIR=/var/www/html
 mkdir -p "$WP_DIR"
 chown -R www-data:www-data "$WP_DIR"
 
-mkdir -p /var/www/.wp-cli
-chown -R www-data:www-data /var/www/.wp-cli
 
 until mysqladmin ping -h "$DB_HOST" -u"$DB_USER" -p"$DB_PASS" --silent; do
     echo "Waiting for database connection..."

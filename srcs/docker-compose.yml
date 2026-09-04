@@ -12,7 +12,7 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
   wordpress:
     build: ./requirements/wordpress
@@ -32,7 +32,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
   nginx:
     build: ./requirements/nginx
@@ -44,7 +44,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
 volumes:
   mariadb_data:
