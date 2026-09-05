@@ -156,7 +156,7 @@ Both mechanisms can provide configuration values to containers, but they are not
 Environment variables are convenient for ordinary configuration values such as:
 
 ```text
-DOMAIN_NAME=example.com
+DOMAIN_NAME=abbenmou.42.fr
 DB_HOST=mariadb
 ```
 
@@ -368,7 +368,7 @@ The project may use an `.env` file for non-sensitive configuration such as the d
 Example:
 
 ```env
-DOMAIN_NAME=login.42.fr
+DOMAIN_NAME=abbenmou.42.fr
 DB_HOST=mariadb
 ```
 
@@ -409,10 +409,10 @@ For local testing, the configured domain should resolve to the local machine.
 For example, `/etc/hosts` can contain:
 
 ```text
-127.0.0.1 login.42.fr
+127.0.0.1 abbenmou.42.fr
 ```
 
-Replace `login.42.fr` with the domain configured by the project.
+Replace `abbenmou.42.fr` with the domain configured by the project.
 
 ### Build and Start the Infrastructure
 
@@ -491,13 +491,13 @@ The exact Makefile target should be checked before running a destructive cleanup
 Open the configured domain in a browser:
 
 ```text
-https://<your-domain>
+https://abbenmou.42.fr
 ```
 
 Example:
 
 ```text
-https://login.42.fr
+https://abbenmou.42.fr
 ```
 
 ### WordPress Administration
@@ -505,7 +505,7 @@ https://login.42.fr
 The WordPress administration interface is normally available at:
 
 ```text
-https://<your-domain>/wp-admin/
+https://abbenmou.42.fr/wp-admin/
 ```
 
 ### Test HTTPS
@@ -513,7 +513,7 @@ https://<your-domain>/wp-admin/
 From the host:
 
 ```bash
-curl -k https://<your-domain>
+curl -k https://abbenmou.42.fr
 ```
 
 The `-k` option allows testing with a certificate that is not trusted by the host, which is common with locally generated certificates.
